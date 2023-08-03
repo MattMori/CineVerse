@@ -27,7 +27,7 @@ const MovieDetail = () => {
           <h1 className="MovieDetail__title">{movie.title}</h1>
           <div className="MovieDetail__image">
             <img
-              src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`} loading="lazy"
+              src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`}
               alt=""
             />
           </div>
