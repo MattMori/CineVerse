@@ -1,0 +1,26 @@
+.Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #1d1d1d;
+  
+    h1 {
+      color: goldenrod;
+      display: inline-block;
+      text-decoration: none;
+    }
+  
+    input {
+      padding: 0.5rem 1rem;
+      border-radius: 15px;
+      border: none;
+      color: #1d1d1d;
+    }
+  
+    input:focus {
+      border: none;
+      outline: none;
+    }
+
+  }

@@ -1,0 +1,85 @@
+.MovieDetail {
+    color: white;
+    background-color: rgb(48, 48, 48);
+    padding: 40px 0;
+  
+    &__container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+    }
+  
+    &__row {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  
+    &__col {
+      flex: 1;
+      margin: 0 10px;
+    }
+  
+    &__title {
+      font-size: 48px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  
+    &__image {
+      width: 100%;
+      height: auto;
+      margin-bottom: 30px;
+  
+      img {
+        border-radius: 0.5rem;
+        max-width: 100%;
+        border: solid 2px goldenrod;
+        box-shadow: 0 2px 6px rgb(0, 0, 0);
+
+      }
+    }
+  
+    &__details {
+      font-size: 24px;
+      margin-bottom: 30px;
+      
+    }
+  
+    &__detail {
+      margin-bottom: 10px;
+      border: solid goldenrod 1px;
+      border-radius: 10px;
+      padding: 5px;
+
+  
+      span {
+        font-weight: bold;
+        margin-right: 10px;
+      }
+    }
+  
+    &__button {
+      display: block;
+      margin-top: 40px;
+      margin-right: auto;
+      margin-left: auto;
+      background-color: goldenrod;
+      color: black;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: none;
+      text-align: center;
+      font-size: 24px;
+      text-decoration: none;
+      border: solid 2px #000000;
+
+  
+      &:hover { 
+        background-color: #303030;
+        color: white;
+        border: solid 2px goldenrod;
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
+      }
+    }
+  }
