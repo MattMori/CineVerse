@@ -5,7 +5,7 @@ import './index.scss'
 
 const Home = ({ searchValueProp }) => {
   const [movies, setMovies] = useState([]);
-
+  
   async function getMovies() {
     const {
       data: { results },
@@ -38,10 +38,12 @@ const Home = ({ searchValueProp }) => {
 
   return (
     <section className="Home">
-      { movies.map((movie) => (
-        <div key={movie.id}>
-        <MovieCard movie={movie}/>
-        </div>
+      {movies
+        .filter((movie) => movie.poster_path && movie.title)  
+        .map((movie) => (
+          <div key={movie.id}>
+            <MovieCard movie={movie} />
+          </div>
       ))}
     </section>
   )

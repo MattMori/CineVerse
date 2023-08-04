@@ -10,7 +10,8 @@
     &:hover {
         box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
         transform: translateY(-5px);
-    }
+        
+     }
 
     .movie-image {
         position: relative;
@@ -22,6 +23,7 @@
             height: 100%;
             object-fit: cover;
             border-bottom: solid 2px goldenrod;
+            
 
         }
 
