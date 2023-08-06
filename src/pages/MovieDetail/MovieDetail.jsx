@@ -4,6 +4,7 @@
   import { MovieService } from "../../api/MovieService";
 
   const MovieDetail = () => {
+    
     const { id } = useParams();
     const [movie, setMovie] = useState({});
 
@@ -20,6 +21,22 @@
       console.log(movie);
     });
 
+    function formatarDataBrasileira(data) {
+      const dataObjeto = new Date(data);
+      const dia = dataObjeto.getDate().toString().padStart(2, '0');
+      const mes = (dataObjeto.getMonth() + 1).toString().padStart(2, '0');
+      const ano = dataObjeto.getFullYear();
+    
+      return `${dia}/${mes}/${ano}`;
+    }
+
+    function formatarNumero(Flutuante){
+      return parseFloat(Flutuante).toFixed(1);
+    }
+    
+     
+    const orcamentoFormatado = movie.budget ? `R$ ${movie.budget.toLocaleString('pt-BR')}` : 'N/A';
+
     return (
       <section className="MovieDetail">
         <div className="MovieDetail__container">
@@ -35,19 +52,19 @@
           <div className="MovieDetail__col">
             <div className="MovieDetail__details">
               <div className="MovieDetail__detail">
-                <span>Orçamento:</span> {movie.budget}
+                <span>Orçamento:</span> {orcamentoFormatado}
               </div>
               <div className="MovieDetail__detail">
                 <span>Lingua Original:</span> {movie.original_language}
               </div>
               <div className="MovieDetail__detail">
-                <span>Data de Lançamento:</span> {movie.release_date}
+                <span>Data de Lançamento:</span> {formatarDataBrasileira(movie.release_date)}
               </div>
               <div className="MovieDetail__detail">
-                <span>Popularidade:</span> {movie.popularity}
+                <span>Popularidade:</span> {formatarNumero(movie.popularity)}
               </div>
               <div className="MovieDetail__detail">
-              <span>votos</span>{movie.vote_average}
+              <span>votos</span>{formatarNumero(movie.vote_average)}/10
                </div>
               <div className="MovieDetail__detail">
                 <span>Descrição:</span> {movie.overview}
