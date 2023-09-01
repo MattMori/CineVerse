@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Header from "./components/header/Header";
 import Home from "./pages/Home/Home.jsx";
 import MovieDetail from "./pages/MovieDetail/MovieDetail";
+import './index.scss';
 function App() {
   const [searchValue, setSearchValue] = useState("");
 
