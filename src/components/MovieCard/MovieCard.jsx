@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import './index.scss';
 
-const MovieCard = ({ movie, selectedGenre }) => {
+const MovieCard = ({ movie }) => {
+  
   return (
     <div className='MovieCard'>
       <div className='movie-image'>
@@ -9,7 +10,6 @@ const MovieCard = ({ movie, selectedGenre }) => {
       </div>
       <div className='movie-description'>
         <h3>{movie.title}</h3>
-        <p>Gênero: {movie.genre}</p> {/* Exibir o gênero do filme */}
         <Link to={`/movie/${movie.id}`} className='btn-details'>
           Ver Detalhes
         </Link>
