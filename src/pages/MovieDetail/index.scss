@@ -1,86 +1,160 @@
 .MovieDetail {
-    color: white;
-    background-image: url('../src/assets/universe1.jpg');
-    padding: 40px 0;
-  
-    &__container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-    }
-  
-    &__row {
-      display: flex;
-      flex-wrap: wrap;
-    }
-  
-    &__col {
-      flex: 1;
-      margin: 0 10px;
-    }
-  
-    &__title {
-      font-size: 48px;
-      margin-bottom: 20px;
-      text-align: center;
-    }
-  
-    &__image {
-      width: 100%;
-      height: auto;
-      margin-bottom: 30px;
-  
-      img {
-        border-radius: 0.5rem;
-        max-width: 100%;
-        border: solid 2px goldenrod;
-        box-shadow: 0 5px 6px rgb(0, 0, 0);
+  color: white;
+  background-image: url('../src/assets/universe1.jpg');
+  padding: 40px 0;
 
-      }
-    }
-  
-    &__details {
-      font-size: 24px;
-      margin-bottom: 30px;
-      
-    }
-  
-    &__detail {
-      margin-bottom: 10px;
-      border: solid goldenrod 1px;
-      border-radius: 10px;
-      padding: 8px;
-      background-color: #00000085;
+  &__container {
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-  
-      span {
-        font-weight: bold;
-        margin-right: 10px;
-      }
-    }
-  
-    &__button {
-      display: block;
-      margin-top: 40px;
-      margin-right: auto;
-      margin-left: auto;
-      background-color: goldenrod;
-      color: black;
-      padding: 10px 20px;
-      border-radius: 5px;
-      border: none;
-      text-align: center;
-      font-size: 24px;
-      text-decoration: none;
-      border: solid 2px #000000;
+  &__row {
+    display: flex;
+    flex-wrap: wrap;
+  }
 
-  
-      &:hover { 
-        background-color: #303030;
-        color: white;
-        border: solid 2px goldenrod;
-        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
-      }
+  &__col {
+    flex: 1;
+    margin: 0 10px;
+  }
+
+  &__title {
+    font-size: 48px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  &__image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 30px;
+
+    img {
+      border-radius: 0.5rem;
+      max-width: 100%;
+      border: solid 2px goldenrod;
+      box-shadow: 0 5px 6px rgb(0, 0, 0);
+
     }
   }
+
+  &__details {
+    font-size: 24px;
+    margin-bottom: 30px;
+
+  }
+
+  &__detail {
+    margin-bottom: 10px;
+    border: solid goldenrod 1px;
+    border-radius: 10px;
+    padding: 8px;
+    background-color: #00000085;
+
+
+    span {
+      font-weight: bold;
+      margin-right: 10px;
+    }
+  }
+
+  &__button {
+    display: block;
+    margin-top: 40px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: goldenrod;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    text-align: center;
+    font-size: 24px;
+    text-decoration: none;
+    border: solid 2px #000000;
+
+
+    &:hover {
+      background-color: #303030;
+      color: white;
+      border: solid 2px goldenrod;
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4);
+    }
+  }
+}
+
+.MovieDetail__videos {
+  text-align: center;
+  padding: 40px 0;
+  color: white;
+
+  h1 {
+    font-size: 40px;
+    text-decoration: underline;
+  }
+
+  .video-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+  }
+
+  .video-item {
+    background-color: #00000085;
+    border: solid goldenrod 1px;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    h2 {
+      font-size: 25px;
+      margin-top: 10px;
+      padding-bottom: 5px;
+    }
+
+    p {
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    a {
+      color: goldenrod;
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+
+  .video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    overflow: hidden;
+    min-width: 420px;
+  }
+
+  .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}

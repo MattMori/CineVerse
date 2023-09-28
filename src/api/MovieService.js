@@ -26,5 +26,8 @@ export class MovieService {
     });
   }
 
-  
+  static getMovieVideos(id) {
+    return axios(withBaseUrl(`movie/${id}/videos`));
   }
+}
+  

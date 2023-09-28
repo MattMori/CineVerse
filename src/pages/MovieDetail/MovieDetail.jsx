@@ -7,6 +7,7 @@ const MovieDetail = () => {
 
   const { id } = useParams();
   const [movie, setMovie] = useState({});
+  const [videos, setVideos] = useState([]);
   
 
   async function getMovie() {
@@ -14,12 +15,28 @@ const MovieDetail = () => {
     setMovie(data);
   }
 
+  async function getMovieVideos() {
+    try {
+      const { data } = await MovieService.getMovieVideos(id);
+      // Filtrar apenas os vídeos do YouTube
+      const youtubeVideos = data.results.filter(
+        (video) => video.site === "YouTube"
+      );
+      setVideos(youtubeVideos);
+    } catch (error) {
+      console.error("Erro ao buscar vídeos do filme:", error);
+    }
+  }
+
+
   useEffect(() => {
     getMovie();
+    getMovieVideos();
   }, []);
 
   useEffect(() => {
     console.log(movie);
+    console.log(videos);
   });
 
   function formatarDataBrasileira(data) {
@@ -121,6 +138,26 @@ const MovieDetail = () => {
           <Link to={"/"} className="MovieDetail__button">
             Voltar
           </Link>
+        </div>
+      </div>
+      <div className="MovieDetail__videos">
+        <h1>Videos</h1>
+        <div className="video-list">
+          {videos.map((video) => (
+            <div key={video.id} className="video-item">
+              <h2>{video.name}</h2>
+              <div className="video-container">
+              <iframe
+                width="560"
+                height="315"
+                src={`https://www.youtube.com/embed/${video.key}`}
+                title={video.name}
+                frameBorder="0"
+                allowFullScreen
+              ></iframe>´
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
