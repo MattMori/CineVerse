@@ -99,6 +99,9 @@ const MovieDetail = () => {
     <section className="MovieDetail">
       <div className="MovieDetail__container">
         <div className="MovieDetail__col">
+        <Link to={"/"} className="MovieDetail__button">
+            Voltar
+          </Link>
           <h1 className="MovieDetail__title">{movie.title}</h1>
           <div className="MovieDetail__image">
             <img
@@ -135,9 +138,7 @@ const MovieDetail = () => {
             </div>
 
           </div>
-          <Link to={"/"} className="MovieDetail__button">
-            Voltar
-          </Link>
+          
         </div>
       </div>
       <div className="MovieDetail__videos">

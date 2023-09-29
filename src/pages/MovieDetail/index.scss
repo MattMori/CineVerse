@@ -23,8 +23,9 @@
 
   &__title {
     font-size: 48px;
-    margin-bottom: 20px;
+    margin: 20px;
     text-align: center;
+    
   }
 
   &__image {
@@ -62,17 +63,14 @@
   }
 
   &__button {
-    display: block;
-    margin-top: 40px;
-    margin-right: auto;
-    margin-left: auto;
+    margin-bottom: 20px;
     background-color: goldenrod;
     color: black;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 15px 30px;
+    border-radius: 15px;
     border: none;
-    text-align: center;
-    font-size: 24px;
+    font-size: 20px;
+    font-weight: bold;
     text-decoration: none;
     border: solid 2px #000000;
 
@@ -147,7 +145,7 @@
     position: relative;
     padding-bottom: 56.25%;
     overflow: hidden;
-    min-width: 420px;
+    min-width: 380px;
   }
 
   .video-container iframe {
