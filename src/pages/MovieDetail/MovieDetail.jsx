@@ -8,11 +8,22 @@ const MovieDetail = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState({});
   const [videos, setVideos] = useState([]);
+  const [credits, setCredits] = useState({ cast: [], crew: [] });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   
 
   async function getMovie() {
-    const { data } = await MovieService.getMovieDetails(id);
-    setMovie(data);
+    try {
+      setLoading(true);
+      const data = await MovieService.getMovieDetails(id);
+      setMovie(data);
+      setCredits(data.credits);
+    } catch (error) {
+      setError('Erro ao carregar detalhes do filme');
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function getMovieVideos() {
@@ -32,12 +43,7 @@ const MovieDetail = () => {
   useEffect(() => {
     getMovie();
     getMovieVideos();
-  }, []);
-
-  useEffect(() => {
-    console.log(movie);
-    console.log(videos);
-  });
+  }, [id]);
 
   function formatarDataBrasileira(data) {
     const dataObjeto = new Date(data);
@@ -97,70 +103,97 @@ const MovieDetail = () => {
 
   return (
     <section className="MovieDetail">
-      <div className="MovieDetail__container">
-        <div className="MovieDetail__col">
-        <Link to={"/"} className="MovieDetail__button">
-            Voltar
-          </Link>
-          <h1 className="MovieDetail__title">{movie.title}</h1>
-          <div className="MovieDetail__image">
-            <img
-              src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`}
-              alt=""
-            />
-          </div>
-        </div>
-        <div className="MovieDetail__col">
-          <div className="MovieDetail__details">
-            <div className="MovieDetail__detail">
-              <span>Sub Titulo:</span> {movie.tagline}
-            </div>
-            <div className="MovieDetail__detail">
-              <span>Gênero:</span> {movie.genres ? movie.genres.map(genre => genre.name).join(', ') : 'N/A'}
-            </div>
-            <div className="MovieDetail__detail">
-              <span>Orçamento:</span> {orcamentoFormatado}
-            </div>
-            <div className="MovieDetail__detail">
-              <span>Língua Original:</span> {converterSiglaParaNomeLingua(movie.original_language)}
-            </div>
-            <div className="MovieDetail__detail">
-              <span>Data de Lançamento:</span> {formatarDataBrasileira(movie.release_date)}
-            </div>
-            <div className="MovieDetail__detail">
-              <span>Popularidade:</span> {formatarNumero(movie.popularity)}
-            </div>
-            <div className="MovieDetail__detail">
-              <span>votos</span>{formatarNumero(movie.vote_average)}/10
-            </div>
-            <div className="MovieDetail__detail">
-              <span>Descrição:</span> {movie.overview}
-            </div>
-
-          </div>
-          
-        </div>
-      </div>
-      <div className="MovieDetail__videos">
-        <h1>Videos</h1>
-        <div className="video-list">
-          {videos.map((video) => (
-            <div key={video.id} className="video-item">
-              <h2>{video.name}</h2>
-              <div className="video-container">
-              <iframe
-                width="560"
-                height="315"
-                src={`https://www.youtube.com/embed/${video.key}`}
-                title={video.name}
-                frameBorder="0"
-                allowFullScreen
-              ></iframe>´
+      {loading ? (
+        <div className="loading-spinner">Carregando...</div>
+      ) : error ? (
+        <div className="error-message">{error}</div>
+      ) : (
+        <>
+          <div className="MovieDetail__container">
+            <div className="MovieDetail__col">
+            <Link to={"/"} className="MovieDetail__button">
+                Voltar
+              </Link>
+              <h1 className="MovieDetail__title">{movie.title}</h1>
+              <div className="MovieDetail__image">
+                <img
+                  src={`https://image.tmdb.org/t/p/w1280${movie.backdrop_path}`}
+                  alt=""
+                />
               </div>
             </div>
-          ))}
-        </div>
-      </div>
+            <div className="MovieDetail__col">
+              <div className="MovieDetail__details">
+                <div className="MovieDetail__detail">
+                  <span>Sub Titulo:</span> {movie.tagline}
+                </div>
+                <div className="MovieDetail__detail">
+                  <span>Gênero:</span> {movie.genres ? movie.genres.map(genre => genre.name).join(', ') : 'N/A'}
+                </div>
+                <div className="MovieDetail__detail">
+                  <span>Orçamento:</span> {orcamentoFormatado}
+                </div>
+                <div className="MovieDetail__detail">
+                  <span>Língua Original:</span> {converterSiglaParaNomeLingua(movie.original_language)}
+                </div>
+                <div className="MovieDetail__detail">
+                  <span>Data de Lançamento:</span> {formatarDataBrasileira(movie.release_date)}
+                </div>
+                <div className="MovieDetail__detail">
+                  <span>Popularidade:</span> {formatarNumero(movie.popularity)}
+                </div>
+                <div className="MovieDetail__detail">
+                  <span>votos</span>{formatarNumero(movie.vote_average)}/10
+                </div>
+                <div className="MovieDetail__detail">
+                  <span>Descrição:</span> {movie.overview}
+                </div>
+
+              </div>
+              
+            </div>
+            <div className="MovieDetail__cast">
+              <h2>Elenco Principal</h2>
+              <div className="cast-list">
+                {credits.cast?.slice(0, 6).map((actor) => (
+                  <div key={actor.id} className="cast-item">
+                    <img
+                      src={`https://image.tmdb.org/t/p/w185${actor.profile_path}`}
+                      alt={actor.name}
+                      onError={(e) => {
+                        e.target.src = '/placeholder-actor.png';
+                      }}
+                    />
+                    <h3>{actor.name}</h3>
+                    <p>{actor.character}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="MovieDetail__videos">
+            <h2>Trailers e Vídeos</h2>
+            <div className="video-grid">
+              {videos.length > 0 ? (
+                videos.slice(0, 4).map((video) => (
+                  <div key={video.id} className="video-card">
+                    <h3>{video.name}</h3>
+                    <div className="video-wrapper">
+                      <iframe
+                        src={`https://www.youtube.com/embed/${video.key}`}
+                        title={video.name}
+                        allowFullScreen
+                      ></iframe>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p>Nenhum vídeo disponível</p>
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </section>
   );
 };
