@@ -1,0 +1,109 @@
+.TrendingSection {
+  padding: var(--spacing-lg);
+  position: relative;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+    padding: 0 50px;
+
+    h2 {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-bold);
+      color: var(--text-primary);
+    }
+  }
+
+  &__toggle {
+    display: flex;
+    gap: 1rem;
+
+    button {
+      padding: 0.5rem 1rem;
+      border: 2px solid goldenrod;
+      background: transparent;
+      color: white;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-weight: var(--font-medium);
+      transition: all 0.3s ease;
+
+      &.active {
+        background: goldenrod;
+        color: black;
+      }
+
+      &:hover:not(.active) {
+        background: rgba(218, 165, 32, 0.2);
+      }
+    }
+  }
+
+  &__carousel {
+    margin: 0 -10px;
+    
+    .slick-track {
+      display: flex;
+      gap: 20px;
+    }
+
+    .slick-slide {
+      padding: 10px;
+      > div {
+        height: 100%;
+      }
+    }
+  }
+
+  &__slide {
+    height: 100%;
+  }
+
+  &__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.7);
+    border: 2px solid goldenrod;
+    color: goldenrod;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: goldenrod;
+      color: black;
+    }
+
+    &.prev {
+      left: 10px;
+    }
+
+    &.next {
+      right: 10px;
+    }
+  }
+
+  &__loading {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--text-primary);
+  }
+}
+
+// Sobrescrevendo estilos do Slick
+.slick-track {
+  margin-left: 0;
+}
+
+.slick-list {
+  margin: 0 -10px;
+} 

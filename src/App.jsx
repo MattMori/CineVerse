@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Header from "./components/header/Header";
-import FilterNav from "./components/FilterNav/FilterNav";
 import Home from "./pages/Home/Home.jsx";
 import MovieDetail from "./pages/MovieDetail/MovieDetail";
 import './index.scss';
 import { MovieService } from "./api/MovieService.js";
+import HeroCarousel from './components/HeroCarousel/HeroCarousel';
 
 function App() {
   const [searchValue, setSearchValue] = useState("");
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
 
   const handleFilterChange = async (filterType, value) => {
     setLoading(true);
@@ -75,15 +76,26 @@ function App() {
     fetchMovies();
   }, [searchValue]);
 
+  useEffect(() => {
+    if (location.state?.filterType && location.state?.value) {
+      handleFilterChange(location.state.filterType, location.state.value);
+      // Limpar o state após usar
+      window.history.replaceState({}, document.title);
+    }
+  }, [location]);
+
   return (
     <div className="App">
-      <Header onSubmit={(inputValue) => setSearchValue(inputValue)} />
+      <Header 
+        onSubmit={(inputValue) => setSearchValue(inputValue)}
+        onFilterChange={handleFilterChange}
+      />
       <Routes>
         <Route 
           path="/" 
           element={
             <>
-              <FilterNav onFilterChange={handleFilterChange} />
+              <HeroCarousel />
               <Home 
                 movies={movies} 
                 loading={loading} 

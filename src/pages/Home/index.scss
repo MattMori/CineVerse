@@ -3,9 +3,34 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    animation: fadeIn 0.8s ease-in;
   
     > div {
-      margin: 25px;
-      max-width: 420px;
+      margin: 15px;
+      max-width: 320px;
+      animation: cardEntrance 0.8s ease-out;
     }
-  }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes cardEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

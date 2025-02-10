@@ -1,5 +1,5 @@
 {
-  "name": "movielist",
+  "name": "cineverse",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -17,6 +17,8 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
     "react-router-dom": "^6.14.2",
+    "react-slick": "^0.30.3",
+    "slick-carousel": "^1.8.1",
     "sort-by": "^1.2.0"
   },
   "devDependencies": {

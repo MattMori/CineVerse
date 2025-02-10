@@ -1,19 +1,112 @@
 .MovieDetail {
   padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: fadeIn 0.8s ease-out;
   
   &__container {
-    max-width: 1200px;
     margin: 0 auto;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 1rem;
     padding: 2rem;
     backdrop-filter: blur(10px);
+    animation: slideUp 0.8s ease-out;
   }
 
-  &__title {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-    color: #fff;
+  &__header {
+    position: relative;
+    margin-bottom: 3rem;
+
+    .MovieDetail__button {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      z-index: 2;
+      padding: 0.8rem 1.5rem;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid goldenrod;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: goldenrod;
+        color: black;
+      }
+    }
+  }
+
+  &__basic-info {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid rgba(218, 165, 32, 0.2);
+    backdrop-filter: blur(10px);
+
+    .MovieDetail__title {
+      font-size: 3rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .MovieDetail__tagline {
+      font-size: 1.4rem;
+      color: goldenrod;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    }
+
+    .MovieDetail__genres {
+      display: flex;
+      gap: 0.8rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+
+      .genre-tag {
+        background: rgba(218, 165, 32, 0.2);
+        border: 1px solid goldenrod;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        color: white;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        user-select: none;
+        
+        &:hover {
+          background: goldenrod;
+          color: black;
+          transform: translateY(-2px);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
+    }
+
+    .MovieDetail__overview {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.1rem;
+      line-height: 1.6;
+      max-width: 800px;
+      
+      &-title {
+        color: goldenrod;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+      }
+
+      p {
+        text-align: justify;
+      }
+    }
   }
 
   &__image {
@@ -25,10 +118,10 @@
     img {
       width: 100%;
       height: auto;
-      transition: transform 0.3s ease;
+      transition: transform 0.5s ease;
       
       &:hover {
-        transform: scale(1.05);
+        transform: scale(1.03);
       }
     }
   }
@@ -44,8 +137,8 @@
     
     .cast-list {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 1rem;
     }
 
     .cast-item {
@@ -53,8 +146,19 @@
       
       img {
         width: 100%;
+        max-width: 120px;
         border-radius: 0.5rem;
         margin-bottom: 0.5rem;
+      }
+
+      h3 {
+        font-size: 0.9rem;
+        margin-bottom: 0.25rem;
+      }
+
+      p {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.7);
       }
     }
   }
@@ -85,15 +189,119 @@
   }
 
   .loading-spinner {
-    text-align: center;
-    padding: 2rem;
-    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    animation: pulse 1.5s infinite;
   }
 
   .error-message {
     color: #ff4444;
     text-align: center;
     padding: 2rem;
+  }
+
+  &__technical-info {
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .info-item {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(218, 165, 32, 0.3);
+
+      span {
+        color: goldenrod;
+        font-weight: bold;
+        margin-right: 0.5rem;
+      }
+    }
+  }
+
+  &__production {
+    margin-top: 2rem;
+
+    .production-companies {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-top: 1rem;
+
+      .company-item {
+        text-align: center;
+        max-width: 100px;
+
+        img {
+          max-width: 100%;
+          height: auto;
+          max-height: 50px;
+          object-fit: contain;
+          margin-bottom: 0.5rem;
+          filter: brightness(0) invert(1);
+        }
+
+        span {
+          font-size: 0.8rem;
+          display: block;
+          color: rgba(255, 255, 255, 0.8);
+        }
+      }
+    }
+  }
+
+  &__crew {
+    margin-top: 2rem;
+
+    .crew-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .crew-item {
+      padding: 0.5rem;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 4px;
+      border: 1px solid rgba(218, 165, 32, 0.3);
+
+      .crew-job {
+        color: goldenrod;
+        font-weight: bold;
+        margin-right: 0.5rem;
+      }
+
+      .crew-name {
+        color: white;
+      }
+    }
+  }
+
+  &__external-links {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+
+    .external-link {
+      padding: 0.8rem 1.5rem;
+      background: goldenrod;
+      color: black;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: darken(goldenrod, 10%);
+        transform: translateY(-2px);
+      }
+    }
   }
 }
 
@@ -168,4 +376,36 @@
     width: 100%;
     height: 100%;
   }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.6;
+    }
 }
