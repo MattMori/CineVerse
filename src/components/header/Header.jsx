@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { MovieService } from '../../api/MovieService';
-import { FaFilm } from 'react-icons/fa';
+import { FaFilm, FaFilter } from 'react-icons/fa';
 import './index.scss';
 
 const Header = ({ onSubmit, onFilterChange }) => {
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [genres, setGenres] = useState([]);
   const [selectedYear, setSelectedYear] = useState('');
   const years = Array.from({ length: 30 }, (_, i) => new Date().getFullYear() - i);
@@ -47,7 +48,14 @@ const Header = ({ onSubmit, onFilterChange }) => {
         </form>
       </div>
 
-      <div className="Header__filters">
+      <button 
+        className="Header__filter-toggle"
+        onClick={() => setIsFilterOpen(!isFilterOpen)}
+      >
+        <FaFilter /> Filtros
+      </button>
+
+      <div className={`Header__filters ${isFilterOpen ? 'active' : ''}`}>
         <div className="Header__filters-buttons">
           <button onClick={() => onFilterChange('popular')}>Populares</button>
           <button onClick={() => onFilterChange('now_playing')}>Em Cartaz</button>
@@ -56,10 +64,7 @@ const Header = ({ onSubmit, onFilterChange }) => {
         </div>
 
         <div className="Header__filters-selects">
-          <select 
-            onChange={(e) => onFilterChange('genre', e.target.value)}
-            aria-label="Filtrar por gênero"
-          >
+          <select onChange={(e) => onFilterChange('genre', e.target.value)}>
             <option value="">Gênero</option>
             {genres.map(genre => (
               <option key={genre.id} value={genre.id}>
@@ -74,7 +79,6 @@ const Header = ({ onSubmit, onFilterChange }) => {
               setSelectedYear(e.target.value);
               onFilterChange('year', e.target.value);
             }}
-            aria-label="Filtrar por ano"
           >
             <option value="">Ano</option>
             {years.map(year => (
