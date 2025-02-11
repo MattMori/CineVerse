@@ -7,8 +7,23 @@ import './index.scss';
 const Header = ({ onSubmit, onFilterChange }) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [genres, setGenres] = useState([]);
-  const [selectedYear, setSelectedYear] = useState('');
+  const [activeFilters, setActiveFilters] = useState({
+    genre: '',
+    year: '',
+    type: 'popular' // popular, now_playing, top_rated, upcoming
+  });
   const years = Array.from({ length: 30 }, (_, i) => new Date().getFullYear() - i);
+
+  const applyFilters = () => {
+    onFilterChange('combined', activeFilters);
+  };
+
+  const handleFilterChange = (filterType, value) => {
+    setActiveFilters(prev => {
+      const newFilters = { ...prev, [filterType]: value };
+      return newFilters;
+    });
+  };
 
   useEffect(() => {
     const loadGenres = async () => {
@@ -22,6 +37,10 @@ const Header = ({ onSubmit, onFilterChange }) => {
     loadGenres();
   }, []);
 
+  useEffect(() => {
+    applyFilters();
+  }, [activeFilters]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const searchValue = event.target[0].value;
@@ -29,10 +48,31 @@ const Header = ({ onSubmit, onFilterChange }) => {
     event.target[0].value = "";
   };
 
+  const handleLogoClick = () => {
+    // Limpa o input de busca se existir
+    const searchInput = document.querySelector('.search-form input');
+    if (searchInput) {
+      searchInput.value = '';
+    }
+    
+    // Reseta os selects
+    setActiveFilters({
+      genre: '',
+      year: '',
+      type: 'popular'
+    });
+    
+    // Chama o filtro default
+    onFilterChange('popular');
+    
+    // Fecha o menu de filtros em mobile
+    setIsFilterOpen(false);
+  };
+
   return (
     <header className="Header">
       <div className="Header__main">
-        <Link to="/" className="logo">
+        <Link to="/" className="logo" onClick={handleLogoClick}>
           <h1>
             <FaFilm />
             Cine<span>Verse</span>
@@ -57,14 +97,37 @@ const Header = ({ onSubmit, onFilterChange }) => {
 
       <div className={`Header__filters ${isFilterOpen ? 'active' : ''}`}>
         <div className="Header__filters-buttons">
-          <button onClick={() => onFilterChange('popular')}>Populares</button>
-          <button onClick={() => onFilterChange('now_playing')}>Em Cartaz</button>
-          <button onClick={() => onFilterChange('top_rated')}>Mais Bem Avaliados</button>
-          <button onClick={() => onFilterChange('upcoming')}>Lançamentos</button>
+          <button 
+            onClick={() => handleFilterChange('type', 'popular')}
+            className={activeFilters.type === 'popular' ? 'active' : ''}
+          >
+            Populares
+          </button>
+          <button 
+            onClick={() => handleFilterChange('type', 'now_playing')}
+            className={activeFilters.type === 'now_playing' ? 'active' : ''}
+          >
+            Em Cartaz
+          </button>
+          <button 
+            onClick={() => handleFilterChange('type', 'top_rated')}
+            className={activeFilters.type === 'top_rated' ? 'active' : ''}
+          >
+            Mais Bem Avaliados
+          </button>
+          <button 
+            onClick={() => handleFilterChange('type', 'upcoming')}
+            className={activeFilters.type === 'upcoming' ? 'active' : ''}
+          >
+            Lançamentos
+          </button>
         </div>
 
         <div className="Header__filters-selects">
-          <select onChange={(e) => onFilterChange('genre', e.target.value)}>
+          <select 
+            value={activeFilters.genre}
+            onChange={(e) => handleFilterChange('genre', e.target.value)}
+          >
             <option value="">Gênero</option>
             {genres.map(genre => (
               <option key={genre.id} value={genre.id}>
@@ -74,11 +137,8 @@ const Header = ({ onSubmit, onFilterChange }) => {
           </select>
 
           <select 
-            value={selectedYear}
-            onChange={(e) => {
-              setSelectedYear(e.target.value);
-              onFilterChange('year', e.target.value);
-            }}
+            value={activeFilters.year}
+            onChange={(e) => handleFilterChange('year', e.target.value)}
           >
             <option value="">Ano</option>
             {years.map(year => (

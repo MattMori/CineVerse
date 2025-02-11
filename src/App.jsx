@@ -41,6 +41,35 @@ function App() {
             response = await MovieService.getMoviesByYear(value);
           }
           break;
+        case 'actor':
+          if (value) {
+            response = await MovieService.getMoviesByActor(value);
+            if (location.state?.actorName) {
+              // Você pode adicionar um estado para mostrar "Filmes com {actorName}"
+            }
+          }
+          break;
+        case 'crew':
+          if (value) {
+            response = await MovieService.getMoviesByCrewMember(value);
+            if (location.state?.crewName && location.state?.crewJob) {
+              // Opcional: Mostrar "Filmes com {crewName} como {crewJob}"
+            }
+          }
+          break;
+        case 'company':
+          if (value) {
+            response = await MovieService.getMoviesByCompany(value);
+            if (location.state?.companyName) {
+              // Opcional: Mostrar "Filmes da {companyName}"
+            }
+          }
+          break;
+        case 'combined':
+          if (value) {
+            response = await MovieService.getMoviesWithCombinedFilters(value);
+          }
+          break;
         default:
           response = await MovieService.getMovies();
       }

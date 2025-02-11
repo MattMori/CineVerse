@@ -29,14 +29,11 @@ const MovieDetail = () => {
 
   async function getMovieVideos() {
     try {
-      const { data } = await MovieService.getMovieVideos(id);
-      // Filtrar apenas os vídeos do YouTube
-      const youtubeVideos = data.results.filter(
-        (video) => video.site === "YouTube"
-      );
-      setVideos(youtubeVideos);
+      const videos = await MovieService.getMovieVideos(id);
+      setVideos(videos);
     } catch (error) {
       console.error("Erro ao buscar vídeos do filme:", error);
+      setVideos([]);
     }
   }
 
@@ -104,6 +101,76 @@ const MovieDetail = () => {
 
   const handleGenreClick = (genreId) => {
     navigate('/', { state: { filterType: 'genre', value: genreId } });
+  };
+
+  const handleActorClick = async (actor) => {
+    navigate('/', { 
+      state: { 
+        filterType: 'actor', 
+        value: actor.id,
+        actorName: actor.name 
+      } 
+    });
+  };
+
+  const handleCrewClick = (crewMember) => {
+    navigate('/', { 
+      state: { 
+        filterType: 'crew', 
+        value: crewMember.id,
+        crewName: crewMember.name,
+        crewJob: crewMember.job
+      } 
+    });
+  };
+
+  const handleCompanyClick = (company) => {
+    navigate('/', { 
+      state: { 
+        filterType: 'company', 
+        value: company.id,
+        companyName: company.name
+      } 
+    });
+  };
+
+  const renderVideoEmbed = (video) => {
+    const { site, key } = video;
+    
+    switch (site.toLowerCase()) {
+      case 'youtube':
+        return (
+          <iframe
+            src={`https://www.youtube.com/embed/${key}`}
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        );
+      
+      case 'vimeo':
+        return (
+          <iframe
+            src={`https://player.vimeo.com/video/${key}`}
+            title="Vimeo video player"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen
+          />
+        );
+      
+      case 'dailymotion':
+        return (
+          <iframe
+            src={`https://www.dailymotion.com/embed/video/${key}`}
+            title="Dailymotion video player"
+            allow="autoplay; fullscreen; picture-in-picture"
+            allowFullScreen
+          />
+        );
+      
+      default:
+        return null;
+    }
   };
 
   return (
@@ -198,7 +265,13 @@ const MovieDetail = () => {
                 <h2>Elenco Principal</h2>
                 <div className="cast-list">
                   {credits.cast?.slice(0, 4).map((actor) => (
-                    <div key={actor.id} className="cast-item">
+                    <div 
+                      key={actor.id} 
+                      className="cast-item"
+                      onClick={() => handleActorClick(actor)}
+                      role="button"
+                      tabIndex={0}
+                    >
                       <img
                         src={`https://image.tmdb.org/t/p/w154${actor.profile_path}`}
                         alt={actor.name}
@@ -220,7 +293,13 @@ const MovieDetail = () => {
                   {credits.crew?.filter(person => 
                     ['Director', 'Producer', 'Screenplay'].includes(person.job)
                   ).map(person => (
-                    <div key={person.id} className="crew-item">
+                    <div 
+                      key={person.id} 
+                      className="crew-item"
+                      onClick={() => handleCrewClick(person)}
+                      role="button"
+                      tabIndex={0}
+                    >
                       <span className="crew-job">{person.job}:</span>
                       <span className="crew-name">{person.name}</span>
                     </div>
@@ -236,7 +315,13 @@ const MovieDetail = () => {
                 <h2>Produção</h2>
                 <div className="production-companies">
                   {movie.production_companies?.map(company => (
-                    <div key={company.id} className="company-item">
+                    <div 
+                      key={company.id} 
+                      className="company-item"
+                      onClick={() => handleCompanyClick(company)}
+                      role="button"
+                      tabIndex={0}
+                    >
                       {company.logo_path && (
                         <img 
                           src={`https://image.tmdb.org/t/p/w92${company.logo_path}`}
@@ -278,21 +363,16 @@ const MovieDetail = () => {
             <div className="MovieDetail__videos">
               <h2>Trailers e Vídeos</h2>
               <div className="video-grid">
-                {videos.length > 0 ? (
+                {Array.isArray(videos) && videos.length > 0 ? (
                   videos.slice(0, 4).map((video) => (
-                    <div key={video.id} className="video-card">
-                      <h3>{video.name}</h3>
-                      <div className="video-wrapper">
-                        <iframe
-                          src={`https://www.youtube.com/embed/${video.key}`}
-                          title={video.name}
-                          allowFullScreen
-                        ></iframe>
-                      </div>
+                    <div key={video.id} className="video-wrapper">
+                      {renderVideoEmbed(video)}
+                      <p className="video-title">{video.name}</p>
+                      <span className="video-type">{video.type}</span>
                     </div>
                   ))
                 ) : (
-                  <p>Nenhum vídeo disponível</p>
+                  <p className="no-videos">Nenhum vídeo disponível</p>
                 )}
               </div>
             </div>

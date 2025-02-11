@@ -50,12 +50,38 @@ export class MovieService {
       }
     }
 
-    static async getMovieVideos(id) {
+    static async getMovieVideos(movieId) {
       try {
-        return await axios(withBaseUrl(`movie/${id}/videos`));
+        const response = await axios(withBaseUrl(`movie/${movieId}/videos`));
+        const videos = response.data.results;
+        
+        // Filtra e ordena os vídeos
+        const sortedVideos = videos
+          .filter(video => 
+            // Aceita vídeos do YouTube e outras plataformas
+            (video.site.toLowerCase() === 'youtube' || 
+             video.site.toLowerCase() === 'vimeo' ||
+             video.site.toLowerCase() === 'dailymotion') &&
+            // Garante que a key existe e não é privada
+            video.key && 
+            !video.key.includes('private')
+          )
+          .sort((a, b) => {
+            const typeOrder = {
+              'Trailer': 1,
+              'Teaser': 2,
+              'Clip': 3,
+              'Featurette': 4,
+              'Behind the Scenes': 5
+            };
+            
+            return (typeOrder[a.type] || 999) - (typeOrder[b.type] || 999);
+          });
+
+        return sortedVideos;
       } catch (error) {
-        console.error('Erro ao buscar vídeos:', error);
-        throw error;
+        console.error('Erro ao buscar vídeos do filme:', error);
+        return []; // Retorna array vazio em caso de erro
       }
     }
 
@@ -110,9 +136,101 @@ export class MovieService {
   // Buscar filmes por ano
   static async getMoviesByYear(year) {
     try {
-      return await axios(withBaseUrl(`discover/movie?year=${year}`));
+      return await axios(withBaseUrl('discover/movie', {
+        primary_release_year: year,
+        sort_by: 'popularity.desc'
+      }));
     } catch (error) {
       console.error('Erro ao buscar filmes por ano:', error);
+      throw error;
+    }
+  }
+
+  static async getMoviesByActor(personId) {
+    try {
+      return await axios(withBaseUrl(`discover/movie`, { 
+        with_cast: personId,
+        sort_by: 'popularity.desc'
+      }));
+    } catch (error) {
+      console.error('Erro ao buscar filmes do ator:', error);
+      throw error;
+    }
+  }
+
+  static async getActorDetails(personId) {
+    try {
+      return await axios(withBaseUrl(`person/${personId}`));
+    } catch (error) {
+      console.error('Erro ao buscar detalhes do ator:', error);
+      throw error;
+    }
+  }
+
+  static async getMoviesByCrewMember(personId) {
+    try {
+      return await axios(withBaseUrl(`discover/movie`, { 
+        with_crew: personId,
+        sort_by: 'popularity.desc'
+      }));
+    } catch (error) {
+      console.error('Erro ao buscar filmes do profissional:', error);
+      throw error;
+    }
+  }
+
+  static async getMoviesByCompany(companyId) {
+    try {
+      return await axios(withBaseUrl(`discover/movie`, { 
+        with_companies: companyId,
+        sort_by: 'popularity.desc'
+      }));
+    } catch (error) {
+      console.error('Erro ao buscar filmes da produtora:', error);
+      throw error;
+    }
+  }
+
+  static async getMoviesWithCombinedFilters(filters) {
+    try {
+      const params = {};
+
+      // Configurar ordenação baseado no tipo
+      switch (filters.type) {
+        case 'popular':
+          params.sort_by = 'popularity.desc';
+          break;
+        case 'top_rated':
+          params.sort_by = 'vote_average.desc';
+          params['vote_count.gte'] = 1000; // Garante filmes com votos significativos
+          break;
+        case 'now_playing':
+          params.sort_by = 'release_date.desc';
+          const today = new Date();
+          const lastMonth = new Date(today.setMonth(today.getMonth() - 1));
+          params['primary_release_date.gte'] = lastMonth.toISOString().split('T')[0];
+          params['primary_release_date.lte'] = new Date().toISOString().split('T')[0];
+          break;
+        case 'upcoming':
+          params.sort_by = 'release_date.asc';
+          params['primary_release_date.gte'] = new Date().toISOString().split('T')[0];
+          break;
+        default:
+          params.sort_by = 'popularity.desc';
+      }
+
+      // Adicionar outros filtros
+      if (filters.genre) {
+        params.with_genres = filters.genre;
+      }
+
+      if (filters.year) {
+        params.primary_release_year = filters.year;
+      }
+
+      return await axios(withBaseUrl('discover/movie', params));
+    } catch (error) {
+      console.error('Erro ao buscar filmes com filtros combinados:', error);
       throw error;
     }
   }
