@@ -2,7 +2,7 @@
 
 Link do repositório: https://github.com/MattMori/MovieList
 
-link do site hospedado: https://movie-list-ten-psi.vercel.app/
+link do site hospedado: https://cine-verse-dun.vercel.app/
 
 
  Neste projeto utilizei meus conhecimentos aprendidos sobre JS, HTML e CSS com React nos quais incluem principalmente os React hooks e o React router dom, o projeto foi feito em conjunto com as aulas da Escola DNC ministradas pelo professor Gabriel Salvador que possui uma didática excelente e com isto me possibilitou absorver muito mais rápido o conteúdo.
