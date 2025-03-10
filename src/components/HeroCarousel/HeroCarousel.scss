@@ -9,7 +9,6 @@
   border: 3px solid goldenrod;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 
-  // Garantir que o Slick ocupe todo o espaço
   .slick-slider {
     height: 100%;
     
@@ -121,7 +120,6 @@
     }
   }
 
-  // Estilizando os dots do Slick
   :global {
     .slick-dots {
       position: absolute;
@@ -191,7 +189,6 @@
   }
 }
 
-// Sobrescrever estilos do Slick que podem estar causando o gap
 .slick-slider, .slick-list, .slick-track {
   height: 100%;
 }
@@ -207,7 +204,6 @@
   }
 }
 
-// Responsividade
 @media (max-width: 768px) {
   .HeroCarousel {
     display: none;

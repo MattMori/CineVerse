@@ -44,25 +44,16 @@ function App() {
         case 'actor':
           if (value) {
             response = await MovieService.getMoviesByActor(value);
-            if (location.state?.actorName) {
-              // Você pode adicionar um estado para mostrar "Filmes com {actorName}"
-            }
           }
           break;
         case 'crew':
           if (value) {
             response = await MovieService.getMoviesByCrewMember(value);
-            if (location.state?.crewName && location.state?.crewJob) {
-              // Opcional: Mostrar "Filmes com {crewName} como {crewJob}"
-            }
           }
           break;
         case 'company':
           if (value) {
             response = await MovieService.getMoviesByCompany(value);
-            if (location.state?.companyName) {
-              // Opcional: Mostrar "Filmes da {companyName}"
-            }
           }
           break;
         case 'combined':
@@ -108,7 +99,6 @@ function App() {
   useEffect(() => {
     if (location.state?.filterType && location.state?.value) {
       handleFilterChange(location.state.filterType, location.state.value);
-      // Limpar o state após usar
       window.history.replaceState({}, document.title);
     }
   }, [location]);

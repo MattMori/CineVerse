@@ -57,7 +57,6 @@ const MovieDetail = () => {
   }
 
   function converterSiglaParaNomeLingua(sigla) {
-    // Objeto de mapeamento das siglas para nomes de línguas
     const mapeamentoSiglasNomes = {
       en: 'Inglês',
       es: 'Espanhol',
@@ -90,10 +89,8 @@ const MovieDetail = () => {
       mr: 'Marathi',
       te: 'Telugu',
       kn: 'Kannada',
-      // Adicione mais correspondências conforme necessário
     };
 
-    // Verifica se a sigla existe no mapeamento e retorna a correspondência ou 'Desconhecido' se não existir
     return mapeamentoSiglasNomes[sigla] || 'Desconhecido';
   }
 
@@ -286,7 +283,7 @@ const MovieDetail = () => {
                 </div>
               </div>
 
-              {/* Equipe Técnica Simplificada */}
+              {/* Equipe Técnica */}
               <div className="MovieDetail__crew">
                 <h2>Equipe Técnica</h2>
                 <div className="crew-list">

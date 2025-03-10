@@ -4,7 +4,6 @@ const BASE_URL = "https://api.themoviedb.org/3/";
 const API_KEY = "3e074b6d14a7158d77bae02b97da066e";
 const LANGUAGE = "pt-BR";
 
-// Função auxiliar para construir URLs
 const withBaseUrl = (path, params = {}) => {
   const searchParams = new URLSearchParams({
     api_key: API_KEY,
@@ -55,14 +54,11 @@ export class MovieService {
         const response = await axios(withBaseUrl(`movie/${movieId}/videos`));
         const videos = response.data.results;
         
-        // Filtra e ordena os vídeos
         const sortedVideos = videos
           .filter(video => 
-            // Aceita vídeos do YouTube e outras plataformas
             (video.site.toLowerCase() === 'youtube' || 
              video.site.toLowerCase() === 'vimeo' ||
              video.site.toLowerCase() === 'dailymotion') &&
-            // Garante que a key existe e não é privada
             video.key && 
             !video.key.includes('private')
           )
@@ -81,7 +77,7 @@ export class MovieService {
         return sortedVideos;
       } catch (error) {
         console.error('Erro ao buscar vídeos do filme:', error);
-        return []; // Retorna array vazio em caso de erro
+        return []; 
       }
     }
 
@@ -103,8 +99,7 @@ export class MovieService {
     }
   }
 
-  // Filmes em cartaz nos cinemas
-  static async getNowPlaying() {
+   static async getNowPlaying() {
     try {
       return await axios(withBaseUrl("movie/now_playing"));
     } catch (error) {
@@ -113,8 +108,7 @@ export class MovieService {
     }
   }
 
-  // Filmes mais bem avaliados
-  static async getTopRated() {
+   static async getTopRated() {
     try {
       return await axios(withBaseUrl("movie/top_rated"));
     } catch (error) {
@@ -123,8 +117,7 @@ export class MovieService {
     }
   }
 
-  // Lista de gêneros disponíveis
-  static async getGenres() {
+   static async getGenres() {
     try {
       return await axios(withBaseUrl("genre/movie/list"));
     } catch (error) {
@@ -133,8 +126,7 @@ export class MovieService {
     }
   }
 
-  // Buscar filmes por ano
-  static async getMoviesByYear(year) {
+   static async getMoviesByYear(year) {
     try {
       return await axios(withBaseUrl('discover/movie', {
         primary_release_year: year,
@@ -195,14 +187,13 @@ export class MovieService {
     try {
       const params = {};
 
-      // Configurar ordenação baseado no tipo
-      switch (filters.type) {
+       switch (filters.type) {
         case 'popular':
           params.sort_by = 'popularity.desc';
           break;
         case 'top_rated':
           params.sort_by = 'vote_average.desc';
-          params['vote_count.gte'] = 1000; // Garante filmes com votos significativos
+          params['vote_count.gte'] = 1000; 
           break;
         case 'now_playing':
           params.sort_by = 'release_date.desc';
@@ -219,8 +210,7 @@ export class MovieService {
           params.sort_by = 'popularity.desc';
       }
 
-      // Adicionar outros filtros
-      if (filters.genre) {
+       if (filters.genre) {
         params.with_genres = filters.genre;
       }
 

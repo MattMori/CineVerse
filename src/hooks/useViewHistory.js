@@ -13,7 +13,7 @@ export const useViewHistory = () => {
   const addToHistory = (movie) => {
     setHistory(prev => {
       const filtered = prev.filter(m => m.id !== movie.id);
-      return [movie, ...filtered].slice(0, 20); // Mantém apenas os últimos 20
+      return [movie, ...filtered].slice(0, 20); 
     });
   };
 

@@ -10,7 +10,7 @@ const Header = ({ onSubmit, onFilterChange }) => {
   const [activeFilters, setActiveFilters] = useState({
     genre: '',
     year: '',
-    type: 'popular' // popular, now_playing, top_rated, upcoming
+    type: 'popular'  
   });
   const years = Array.from({ length: 30 }, (_, i) => new Date().getFullYear() - i);
 
@@ -49,23 +49,19 @@ const Header = ({ onSubmit, onFilterChange }) => {
   };
 
   const handleLogoClick = () => {
-    // Limpa o input de busca se existir
     const searchInput = document.querySelector('.search-form input');
     if (searchInput) {
       searchInput.value = '';
     }
     
-    // Reseta os selects
     setActiveFilters({
       genre: '',
       year: '',
       type: 'popular'
     });
     
-    // Chama o filtro default
     onFilterChange('popular');
     
-    // Fecha o menu de filtros em mobile
     setIsFilterOpen(false);
   };
 

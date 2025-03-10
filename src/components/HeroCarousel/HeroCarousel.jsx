@@ -13,7 +13,7 @@ const HeroCarousel = () => {
     const fetchMovies = async () => {
       try {
         const response = await MovieService.getNowPlaying();
-        setMovies(response.data.results.slice(0, 5)); // Pegando apenas os 5 primeiros filmes
+        setMovies(response.data.results.slice(0, 5)); 
       } catch (error) {
         console.error('Erro ao buscar filmes:', error);
       } finally {

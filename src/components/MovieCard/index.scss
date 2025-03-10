@@ -110,7 +110,6 @@
     }
 }
 
-// Ajuste para o grid na Home
 .Home {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -124,7 +123,6 @@
     }
 }
 
-// Responsividade ajustada
 @media (max-width: 1200px) {
     .Home {
         grid-template-columns: repeat(3, 1fr);
