@@ -21,11 +21,17 @@
 - Exibição de detalhes do filme
 - Interface estilizada de forma personalizada
 
-## Melhorias Futuras
+## Melhorias concluidas
 
-- Aprimorar o design da página inicial
-- Melhorar a apresentação de detalhes dos filmes
-- Adicionar filtros por gênero, lançamento e avaliação
+- Aprimoraramento do design da página inicial
+- Melhoria na apresentação de detalhes dos filmes
+- Adicionado filtros por gênero, lançamento e ano
+
+## Melhorias futuras
+- Login e cadastro de usuario
+- implementar area de avaliação de filmes
+- implementar proprio score para os filmes com base nas avaliações
+- layout mais responsivo
 - Implementar um sistema de favoritos para salvar filmes preferidos
 
 ## Como Executar o Projeto
